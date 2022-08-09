@@ -6,17 +6,17 @@ import (
 	"time"
 )
 
-var defaultLogTarget = os.Stdout
+var LogTarget = os.Stdout
 
 func NewJsonLogger(level zerolog.Level) zerolog.Logger {
 	zerolog.SetGlobalLevel(level)
-	return zerolog.New(defaultLogTarget).With().Timestamp().Caller().Logger()
+	return zerolog.New(LogTarget).With().Timestamp().Caller().Logger()
 }
 
 func NewConsoleLogger(level zerolog.Level) zerolog.Logger {
 	zerolog.SetGlobalLevel(level)
 	consoleWriter := zerolog.ConsoleWriter{
-		Out:        defaultLogTarget,
+		Out:        LogTarget,
 		NoColor:    false,
 		TimeFormat: time.RFC3339,
 	}
