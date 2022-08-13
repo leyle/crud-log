@@ -3,6 +3,7 @@ package crudlog
 import (
 	"github.com/rs/zerolog"
 	"os"
+	"strconv"
 	"time"
 )
 
@@ -15,6 +16,20 @@ func NewJsonLogger(level zerolog.Level) zerolog.Logger {
 
 func NewConsoleLogger(level zerolog.Level) zerolog.Logger {
 	zerolog.SetGlobalLevel(level)
+
+	// Lshortfile
+	zerolog.CallerMarshalFunc = func(file string, line int) string {
+		short := file
+		for i := len(file) - 1; i > 0; i-- {
+			if file[i] == '/' {
+				short = file[i+1:]
+				break
+			}
+		}
+		file = short
+		return file + ":" + strconv.Itoa(line)
+	}
+
 	consoleWriter := zerolog.ConsoleWriter{
 		Out:        LogTarget,
 		NoColor:    false,
