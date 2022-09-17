@@ -18,7 +18,7 @@ func NewConsoleLogger(level zerolog.Level) zerolog.Logger {
 	zerolog.SetGlobalLevel(level)
 
 	// Lshortfile
-	zerolog.CallerMarshalFunc = func(file string, line int) string {
+	zerolog.CallerMarshalFunc = func(pc uintptr, file string, line int) string {
 		short := file
 		for i := len(file) - 1; i > 0; i-- {
 			if file[i] == '/' {
